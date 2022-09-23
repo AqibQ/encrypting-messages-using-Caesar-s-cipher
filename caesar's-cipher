@@ -1,0 +1,81 @@
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
+
+bool only_digits(string t);
+char rotate(char a, int b);
+
+int main(int argc, string argv[])
+{
+    // Checking for only a single command-line argument
+    if (argc != 2)
+    {
+        printf("Usage: ./caesar single-line key\n");
+        return 1;
+    }
+
+    // Checking for only digits
+    else if (only_digits(argv[1]))
+    {
+        printf("Usage: ./caesar key\n");
+        return 1;
+    }
+   /* else
+    {
+        //printf("%s\n", argv[1]);
+        return 0;
+    }*/
+
+    // Converting string into int
+    int k = atoi(argv[1]);
+
+    // Prompt user for plaintext
+    string plaintext = get_string("plaintext:  ");
+
+    // Encipher the plaintext
+    char ciphertext;
+    for ( int i = 0, n = strlen(plaintext); i < n; i++)
+    {
+        ciphertext = rotate(plaintext[i], k);
+    }
+    printf("%c \n", ciphertext);
+}
+
+// Only_digits function
+bool only_digits(string text)
+{
+    for (int i = 0, n = strlen(text); i < n; i++)
+    {
+        if (isdigit(text[i]))
+            {
+                 return false;
+            }
+    }
+    return true;
+}
+
+// Rotate function
+char rotate(char p, int k)
+{
+    int ci, pi;
+    if (isalpha(p))
+    {
+        if (isupper(p))
+        {
+            pi = p - 'A';
+            ci = (pi + k) % 26;
+        }
+        else if (islower(p))
+        {
+            pi = p - 'a';
+            ci = (pi + k) % 26;
+        }
+        else
+        {
+            return p;
+        }
+    }
+    return p;
+}
